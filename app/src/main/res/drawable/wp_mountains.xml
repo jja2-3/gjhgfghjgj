@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FFFFD9B8" />
+                <item android:offset="0.45" android:color="#FFB8CBE0" />
+                <item android:offset="1" android:color="#FF7E9BBE" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 朝阳 -->
+    <path android:pathData="M780,520 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M780,520 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0" android:fillColor="#FFF7E8D5" />
+    <!-- 远山 -->
+    <path
+        android:pathData="M0,1240 L260,940 L520,1200 L760,1000 L1080,1260 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF9FB3CC" />
+    <!-- 雾带 -->
+    <path
+        android:pathData="M0,1300 C220,1240 420,1320 640,1270 C860,1220 980,1290 1080,1260 L1080,1360 C880,1400 660,1340 440,1390 C240,1430 100,1380 0,1400 Z"
+        android:fillColor="#80FFFFFF" />
+    <!-- 中山 -->
+    <path
+        android:pathData="M0,1500 L220,1240 L440,1460 L680,1220 L900,1480 L1080,1320 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF7C93B2" />
+    <path
+        android:pathData="M0,1560 C240,1500 460,1580 700,1530 C900,1490 1000,1540 1080,1520 L1080,1620 C880,1660 640,1600 420,1650 C220,1690 90,1640 0,1660 Z"
+        android:fillColor="#8CFFFFFF" />
+    <!-- 近山 -->
+    <path
+        android:pathData="M0,1720 L300,1480 L560,1700 L820,1500 L1080,1700 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF5C7396" />
+</vector>

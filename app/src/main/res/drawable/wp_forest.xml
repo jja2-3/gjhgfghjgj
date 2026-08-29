@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FFBFE3C8" />
+                <item android:offset="0.6" android:color="#FF8FCBA4" />
+                <item android:offset="1" android:color="#FF3E7A5C" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 透过树冠的光 -->
+    <path android:pathData="M820,360 m-130,0 a130,130 0 1,1 260,0 a130,130 0 1,1 -260,0" android:fillColor="#59FFFFFF" />
+    <path android:pathData="M820,360 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" android:fillColor="#FFFDF6DC" />
+    <!-- 远处树线 -->
+    <path
+        android:pathData="M0,1300 L60,1180 L120,1300 L190,1120 L260,1300 L330,1160 L400,1300 L470,1100 L540,1300 L610,1170 L680,1300 L750,1130 L820,1300 L890,1180 L960,1300 L1030,1150 L1080,1300 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF4E8A6A" />
+    <!-- 中景松树 -->
+    <path
+        android:pathData="M160,1560 L260,1280 L360,1560 Z M160,1560 L260,1180 L360,1560 Z"
+        android:fillColor="#FF3A7256" />
+    <path
+        android:pathData="M480,1620 L600,1300 L720,1620 Z M480,1620 L600,1200 L720,1620 Z"
+        android:fillColor="#FF3A7256" />
+    <path
+        android:pathData="M820,1580 L920,1320 L1020,1580 Z M820,1580 L920,1220 L1020,1580 Z"
+        android:fillColor="#FF3A7256" />
+    <!-- 近景大树 -->
+    <path
+        android:pathData="M20,1920 L180,1340 L340,1920 Z M20,1920 L180,1240 L340,1920 Z"
+        android:fillColor="#FF2B5D45" />
+    <path
+        android:pathData="M700,1920 L880,1400 L1060,1920 Z M700,1920 L880,1300 L1060,1920 Z"
+        android:fillColor="#FF2B5D45" />
+    <!-- 地面 -->
+    <path
+        android:pathData="M0,1780 C240,1720 480,1800 720,1760 C900,1730 1000,1780 1080,1760 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF2E6249" />
+</vector>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF1A2438" />
+                <item android:offset="1" android:color="#FF0E1522" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 窗外远山 -->
+    <path
+        android:pathData="M120,1000 L340,780 L540,960 L740,760 L960,980 L960,1180 L120,1180 Z"
+        android:fillColor="#FF1E2B44" />
+    <!-- 窗内暖光 -->
+    <path
+        android:pathData="M140,240 L940,240 A60,60 0 0,1 1000,300 L1000,1620 A60,60 0 0,1 940,1680 L140,1680 A60,60 0 0,1 80,1620 L80,300 A60,60 0 0,1 140,240 Z"
+        android:fillColor="#14000000" />
+    <!-- 窗框 -->
+    <path
+        android:pathData="M120,200 L960,200 A80,80 0 0,1 1040,280 L1040,1640 A80,80 0 0,1 960,1720 L120,1720 A80,80 0 0,1 40,1640 L40,280 A80,80 0 0,1 120,200 Z"
+        android:strokeColor="#FF3A4A66"
+        android:strokeWidth="28"
+        android:fillColor="#00000000" />
+    <!-- 窗棂 -->
+    <path android:pathData="M540,200 L540,1720" android:strokeColor="#FF3A4A66" android:strokeWidth="22" />
+    <path android:pathData="M40,700 L1040,700" android:strokeColor="#FF3A4A66" android:strokeWidth="22" />
+    <path android:pathData="M40,1200 L1040,1200" android:strokeColor="#FF3A4A66" android:strokeWidth="22" />
+    <!-- 窗台上的一盏小灯 -->
+    <path android:pathData="M180,1120 L260,1120 L260,1200 L180,1200 Z" android:fillColor="#FFFFD98A" />
+    <path android:pathData="M170,1200 L270,1200 L270,1230 L170,1230 Z" android:fillColor="#FF8A6E4B" />
+    <path android:pathData="M220,1080 m-90,0 a90,90 0 1,1 180,0 a180,180 0 1,1 -180,0" android:fillColor="#26FFD98A" />
+    <!-- 雨滴（斜线） -->
+    <path android:pathData="M160,80 L140,180" android:strokeColor="#4DB8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M300,40 L280,140" android:strokeColor="#40B8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M440,120 L420,220" android:strokeColor="#4DB8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M620,60 L600,160" android:strokeColor="#40B8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M760,140 L740,240" android:strokeColor="#4DB8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M920,80 L900,180" android:strokeColor="#40B8CCE8" android:strokeWidth="6" android:strokeLineCap="round" />
+    <path android:pathData="M240,420 L220,520" android:strokeColor="#40B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+    <path android:pathData="M520,380 L500,480" android:strokeColor="#33B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+    <path android:pathData="M840,440 L820,540" android:strokeColor="#40B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+    <path android:pathData="M360,760 L340,860" android:strokeColor="#33B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+    <path android:pathData="M700,800 L680,900" android:strokeColor="#33B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+    <path android:pathData="M960,840 L940,940" android:strokeColor="#40B8CCE8" android:strokeWidth="5" android:strokeLineCap="round" />
+</vector>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 表盘 -->
+    <path
+        android:pathData="M54,30 A24,24 0 1,1 53.99,30 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.5"
+        android:fillColor="#00000000" />
+    <!-- 时针 -->
+    <path
+        android:pathData="M54,54 L54,40"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+    <!-- 分针 -->
+    <path
+        android:pathData="M54,54 L64,60"
+        android:strokeColor="#FFD9A0"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round" />
+    <!-- 中心点 -->
+    <path
+        android:pathData="M54,54 m-3,0 a3,3 0 1,1 6,0 a3,3 0 1,1 -6,0"
+        android:fillColor="#FFFFFF" />
+    <!-- 对勾：自律完成 -->
+    <path
+        android:pathData="M44,78 L51,85 L66,70"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

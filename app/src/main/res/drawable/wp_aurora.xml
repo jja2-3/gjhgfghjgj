@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <!-- 夜空底色 -->
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF0B1026" />
+                <item android:offset="0.6" android:color="#FF14224A" />
+                <item android:offset="1" android:color="#FF1D3357" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 极光带 -->
+    <path
+        android:pathData="M-100,500 C200,300 400,600 700,380 C900,240 1050,300 1200,220 L1200,520 C1000,620 800,560 600,660 C400,760 150,700 -100,780 Z"
+        android:fillColor="#3C4FE0A8" />
+    <path
+        android:pathData="M-100,640 C250,470 480,760 760,540 C950,400 1080,470 1200,400 L1200,700 C980,800 760,720 560,830 C360,940 140,880 -100,940 Z"
+        android:fillColor="#2E7BE8C0" />
+    <path
+        android:pathData="M-100,800 C300,650 520,900 800,700 C980,580 1100,640 1200,580 L1200,860 C1000,950 780,880 580,990 C380,1100 150,1040 -100,1090 Z"
+        android:fillColor="#1F63B8A0" />
+    <!-- 星星 -->
+    <path android:pathData="M160,180 m-6,0 a6,6 0 1,1 12,0 a6,6 0 1,1 -12,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M330,120 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#59FFFFFF" />
+    <path android:pathData="M520,220 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#73FFFFFF" />
+    <path android:pathData="M760,140 m-6,0 a6,6 0 1,1 12,0 a6,6 0 1,1 -12,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M900,260 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#4DFFFFFF" />
+    <path android:pathData="M240,320 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#59FFFFFF" />
+    <path android:pathData="M640,90 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#73FFFFFF" />
+    <!-- 远山 -->
+    <path
+        android:pathData="M0,1520 L200,1280 L380,1440 L560,1240 L760,1460 L920,1320 L1080,1480 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF0D1730" />
+    <!-- 近山 -->
+    <path
+        android:pathData="M0,1700 L260,1460 L480,1660 L720,1440 L940,1680 L1080,1560 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF0A1226" />
+</vector>

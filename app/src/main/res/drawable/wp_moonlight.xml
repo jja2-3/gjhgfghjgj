@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF101733" />
+                <item android:offset="0.65" android:color="#FF1B2547" />
+                <item android:offset="1" android:color="#FF2A3560" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 月晕 -->
+    <path android:pathData="M760,420 m-190,0 a190,190 0 1,1 380,0 a190,190 0 1,1 -380,0" android:fillColor="#26FFFFE0" />
+    <path android:pathData="M760,420 m-140,0 a140,140 0 1,1 280,0 a140,140 0 1,1 -280,0" android:fillColor="#40FFFFE6" />
+    <!-- 月亮 -->
+    <path android:pathData="M760,420 m-100,0 a100,100 0 1,1 200,0 a100,100 0 1,1 -200,0" android:fillColor="#FFFDF3C7" />
+    <!-- 月坑 -->
+    <path android:pathData="M720,380 m-16,0 a16,16 0 1,1 32,0 a16,16 0 1,1 -32,0" android:fillColor="#26C9BC8A" />
+    <path android:pathData="M800,450 m-11,0 a11,11 0 1,1 22,0 a11,11 0 1,1 -22,0" android:fillColor="#26C9BC8A" />
+    <path android:pathData="M760,340 m-9,0 a9,9 0 1,1 18,0 a9,9 0 1,1 -18,0" android:fillColor="#26C9BC8A" />
+    <!-- 星星 -->
+    <path android:pathData="M180,260 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M360,180 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#59FFFFFF" />
+    <path android:pathData="M520,320 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M920,700 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#66FFFFFF" />
+    <path android:pathData="M240,560 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#4DFFFFFF" />
+    <!-- 云 -->
+    <path
+        android:pathData="M140,760 C200,700 320,700 380,760 C440,700 560,700 620,760 C700,700 820,720 860,780 C920,800 920,860 860,880 L200,880 C140,860 120,800 140,760 Z"
+        android:fillColor="#33FFFFFF" />
+    <!-- 远山 -->
+    <path
+        android:pathData="M0,1560 L240,1300 L480,1520 L720,1280 L940,1500 L1080,1400 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF141B38" />
+    <path
+        android:pathData="M0,1740 C240,1640 480,1760 720,1680 C900,1620 1000,1700 1080,1670 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF0D1226" />
+</vector>

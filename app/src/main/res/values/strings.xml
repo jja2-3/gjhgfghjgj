@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">专注时刻</string>
+    <string name="accessibility_label">专注时刻 · 锁机服务</string>
+    <string name="accessibility_desc">自律模式（严格模式）下，检测到离开专注页面时自动拉回，保证专注不被打断。本服务不会收集任何数据。</string>
+</resources>

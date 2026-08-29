@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF2B1B2E" />
+                <item android:offset="0.6" android:color="#FF4A2C3E" />
+                <item android:offset="1" android:color="#FF2A1A28" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 星点 -->
+    <path android:pathData="M200,240 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#4DFFFFFF" />
+    <path android:pathData="M420,180 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#59FFFFFF" />
+    <path android:pathData="M700,260 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#4DFFFFFF" />
+    <path android:pathData="M880,180 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#4DFFFFFF" />
+    <!-- 远山 -->
+    <path
+        android:pathData="M0,1360 L260,1100 L520,1320 L780,1080 L1080,1300 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF1F1322" />
+    <!-- 地面 -->
+    <path
+        android:pathData="M0,1620 C240,1560 480,1660 720,1600 C900,1560 1000,1620 1080,1600 L1080,1920 L0,1920 Z"
+        android:fillColor="#FF181020" />
+    <!-- 篝火光晕 -->
+    <path android:pathData="M540,1560 m-260,0 a260,260 0 1,1 520,0 a260,260 0 1,1 -520,0" android:fillColor="#26FFB46B" />
+    <path android:pathData="M540,1560 m-160,0 a160,160 0 1,1 320,0 a160,160 0 1,1 -320,0" android:fillColor="#33FFC57E" />
+    <!-- 火焰外层 -->
+    <path
+        android:pathData="M540,1680 C470,1580 480,1480 540,1380 C600,1480 610,1580 540,1680 Z"
+        android:fillColor="#FFFF8C42" />
+    <!-- 火焰内层 -->
+    <path
+        android:pathData="M540,1660 C495,1590 500,1520 540,1440 C580,1520 585,1590 540,1660 Z"
+        android:fillColor="#FFFFC46B" />
+    <!-- 火焰芯 -->
+    <path
+        android:pathData="M540,1640 C515,1600 517,1560 540,1510 C563,1560 565,1600 540,1640 Z"
+        android:fillColor="#FFFFF3C9" />
+    <!-- 木柴 -->
+    <path
+        android:pathData="M400,1700 L680,1740 L672,1780 L392,1740 Z"
+        android:fillColor="#FF5D4037" />
+    <path
+        android:pathData="M420,1760 L660,1690 L676,1726 L436,1796 Z"
+        android:fillColor="#FF4E342E" />
+    <!-- 火星 -->
+    <path android:pathData="M500,1320 m-6,0 a6,6 0 1,1 12,0 a6,6 0 1,1 -12,0" android:fillColor="#99FFD180" />
+    <path android:pathData="M580,1260 m-5,0 a5,5 0 1,1 10,0 a5,5 0 1,1 -10,0" android:fillColor="#99FFD180" />
+    <path android:pathData="M540,1180 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#73FFD180" />
+    <path android:pathData="M620,1360 m-4,0 a4,4 0 1,1 8,0 a4,4 0 1,1 -8,0" android:fillColor="#73FFD180" />
+</vector>
