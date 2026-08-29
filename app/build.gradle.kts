@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.focus.moment"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.focus.moment"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
     }

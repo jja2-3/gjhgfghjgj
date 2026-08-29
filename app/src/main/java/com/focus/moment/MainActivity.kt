@@ -36,7 +36,7 @@ import com.focus.moment.data.SettingsStore
 import com.focus.moment.data.model.TimerMode
 import com.focus.moment.service.FocusSessionState
 import com.focus.moment.service.TimerDraft
-import com.focus.moment.service.TimerPhase
+import com.focus.moment.data.model.TimerPhase
 import com.focus.moment.service.TimerService
 import com.focus.moment.ui.home.HomeScreen
 import com.focus.moment.ui.report.ReportScreen
