@@ -147,7 +147,7 @@ fun ReportScreen() {
                 onClick = {
                     sharing = true
                     scope.launch {
-                        shareMsg = shareReportImage(ctx, graphicsLayer.toImage())
+                        shareMsg = shareReportImage(ctx, graphicsLayer.toImageBitmap())
                         sharing = false
                     }
                 }
