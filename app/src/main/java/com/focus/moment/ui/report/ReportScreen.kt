@@ -163,7 +163,7 @@ fun ReportScreen() {
             Modifier
                 .verticalScroll(rememberScrollState())
                 .drawWithContent {
-                    scope.launch { graphicsLayer.record { this@drawWithContent.drawContent() } }
+                    graphicsLayer.record { this@drawWithContent.drawContent() }
                     drawLayer(graphicsLayer)
                 }
                 .padding(16.dp)

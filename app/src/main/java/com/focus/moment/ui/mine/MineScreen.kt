@@ -443,7 +443,7 @@ fun MineScreen(
                             info == null -> "检查失败，请稍后再试"
                             UpdateChecker.isNewer(info.version, versionName) -> {
                                 openUrl(ctx, info.apkUrl.ifBlank { info.releaseUrl })
-                                "发现新版本 v${info.version}，已打开下载页"
+                                "发现新版本 v${info.version}\n更新内容：${info.changelog.ifBlank { "性能优化与问题修复" }}"
                             }
                             else -> "已是最新版本 v$versionName"
                         }
