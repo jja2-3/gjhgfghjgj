@@ -13,7 +13,9 @@ data class TimerDraft(
     val category: Category = Category.OTHER,
     val mode: TimerMode = TimerMode.COUNTDOWN,
     val plannedMinutes: Int = 25,
-    val lock: Boolean = false
+    val lock: Boolean = false,
+    val todoItemId: String? = null,   // 关联待办
+    val source: String = "FOCUS"      // FOCUS / TODO / LOCK
 )
 
 /** 计时页共享状态（服务与 UI 之间的桥梁） */
@@ -28,7 +30,9 @@ data class TimerState(
     val startedAt: Long = 0L,
     val endAt: Long = 0L,
     val nowTick: Long = 0L,       // 每秒刷新，驱动 UI
-    val finishedSeconds: Int = 0  // 结束时实际专注秒数
+    val finishedSeconds: Int = 0, // 结束时实际专注秒数
+    val todoItemId: String? = null,
+    val source: String = "FOCUS"
 )
 
 object FocusSessionState {

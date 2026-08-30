@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <!-- 春日天空 -->
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FFBFE0F0" />
+                <item android:offset="0.55" android:color="#FFF6E3EA" />
+                <item android:offset="1" android:color="#FFEFDCD2" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 上方樱花树冠 -->
+    <path android:pathData="M-60,-40 C160,-120 420,-60 560,-140 C740,-240 980,-140 1140,-200 L1140,420 C960,360 820,420 640,380 C460,340 300,420 120,380 C40,360 -20,340 -60,320 Z" android:fillColor="#FFF5C6D3" />
+    <path android:pathData="M-60,60 C140,0 340,60 520,10 C700,-40 900,40 1140,0 L1140,220 C940,180 760,240 560,200 C380,164 200,224 -60,180 Z" android:fillColor="#66FBDDE6" />
+    <!-- 垂枝 -->
+    <path android:pathData="M180,240 C200,420 160,560 200,720 M360,200 C380,380 340,540 380,700 M760,180 C740,400 790,560 750,740 M920,220 C900,420 950,600 910,780" android:strokeColor="#FFECB7C8" android:strokeWidth="10" android:fillColor="#00000000" />
+    <!-- 花瓣 -->
+    <path android:pathData="M240,520 m-14,0 a14,14 0 1,1 28,0 a14,14 0 1,1 -28,0" android:fillColor="#CCF7CDDA" />
+    <path android:pathData="M420,640 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0" android:fillColor="#B3F7CDDA" />
+    <path android:pathData="M620,500 m-13,0 a13,13 0 1,1 26,0 a13,13 0 1,1 -26,0" android:fillColor="#CCF7CDDA" />
+    <path android:pathData="M820,660 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0" android:fillColor="#B3F7CDDA" />
+    <path android:pathData="M500,880 m-14,0 a14,14 0 1,1 28,0 a14,14 0 1,1 -28,0" android:fillColor="#CCF7CDDA" />
+    <path android:pathData="M160,980 m-11,0 a11,11 0 1,1 22,0 a11,11 0 1,1 -22,0" android:fillColor="#A6F7CDDA" />
+    <path android:pathData="M900,1020 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0" android:fillColor="#A6F7CDDA" />
+    <path android:pathData="M320,1180 m-12,0 a12,12 0 1,1 24,0 a12,12 0 1,1 -24,0" android:fillColor="#99F7CDDA" />
+    <!-- 小径 -->
+    <path android:pathData="M380,1920 C420,1560 480,1360 540,1200 C600,1360 660,1560 700,1920 Z" android:fillColor="#FFE8D8C8" />
+    <path android:pathData="M470,1600 h30 v14 h-30z M540,1500 h26 v13 h-26z M500,1760 h34 v14 h-34z M560,1700 h26 v13 h-26z" android:fillColor="#59C4A98E" />
+    <!-- 远处树干 -->
+    <path android:pathData="M120,1400 L150,1000 L180,1400 Z M880,1420 L910,1040 L940,1420 Z" android:fillColor="#FF9B7B62" />
+    <path android:pathData="M80,1040 C140,980 200,990 240,940 M860,1080 C920,1020 980,1030 1020,980" android:strokeColor="#FFE5B9CB" android:strokeWidth="18" android:fillColor="#00000000" />
+    <!-- 飞舞花瓣 -->
+    <path android:pathData="M640,900 q14,-12 28,0 q-14,12 -28,0" android:fillColor="#E5F7CDDA" />
+    <path android:pathData="M280,860 q13,-11 26,0 q-13,11 -26,0" android:fillColor="#E5F7CDDA" />
+</vector>

@@ -68,6 +68,8 @@ class TimerService : Service() {
         private const val E_STATUS = "status"
         private const val E_NOISE = "noise"
         private const val E_VOLUME = "volume"
+        private const val E_TODO_ID = "todo_id"
+        private const val E_SOURCE = "source"
 
         fun start(context: Context, draft: TimerDraft) {
             val i = Intent(context, TimerService::class.java).setAction(ACTION_START)
@@ -77,6 +79,8 @@ class TimerService : Service() {
                 .putExtra(E_MINUTES, draft.plannedMinutes)
                 .putExtra(E_LOCK, draft.lock)
                 .putExtra(E_SCHEDULE_ID, draft.scheduleId)
+                .putExtra(E_TODO_ID, draft.todoItemId)
+                .putExtra(E_SOURCE, draft.source)
             context.startForegroundService(i)
         }
 
@@ -154,6 +158,8 @@ class TimerService : Service() {
         val minutes = i.getIntExtra(E_MINUTES, 25)
         val lock = i.getBooleanExtra(E_LOCK, false)
         val scheduleId = i.getStringExtra(E_SCHEDULE_ID)
+        val todoId = i.getStringExtra(E_TODO_ID)
+        val source = i.getStringExtra(E_SOURCE) ?: "FOCUS"
         val now = System.currentTimeMillis()
 
         val state = TimerState(
@@ -166,7 +172,9 @@ class TimerService : Service() {
             lock = lock,
             startedAt = now,
             endAt = if (mode == TimerMode.COUNTDOWN) now + minutes * 60_000L else 0L,
-            nowTick = now
+            nowTick = now,
+            todoItemId = todoId,
+            source = source
         )
         FocusSessionState.set(state)
         FocusLockController.lockActive = lock && settings.lockMode == "STRICT"
@@ -181,6 +189,7 @@ class TimerService : Service() {
             .putString("title", title).putString("category", category)
             .putString("mode", mode.name).putInt("minutes", minutes)
             .putBoolean("lock", lock).putString("schedule_id", scheduleId)
+            .putString("todo_id", todoId).putString("source", source)
             .putLong("started_at", now).putLong("end_at", state.endAt)
             .apply()
 
@@ -228,7 +237,8 @@ class TimerService : Service() {
         AlarmPlayer.start(
             this,
             AlarmSound.from(settings.alarmSound),
-            RemindMode.from(settings.remindMode)
+            RemindMode.from(settings.remindMode),
+            settings.customRingtonePath.ifBlank { null }
         )
         showFinishedNotification(s.title)
     }
@@ -237,6 +247,7 @@ class TimerService : Service() {
     private fun handleComplete(status: SessionStatus, manual: Boolean) {
         val s = FocusSessionState.state.value
         if (s.phase == TimerPhase_IDLE()) { stopSelf(); return }
+        val settings = runBlocking { SettingsStore(this@TimerService).current() }
         val now = System.currentTimeMillis()
         val seconds = if (s.phase == com.focus.moment.data.model.TimerPhase.FINISHED) {
             s.finishedSeconds
@@ -264,9 +275,26 @@ class TimerService : Service() {
                         actualSeconds = seconds,
                         mode = s.mode.name,
                         status = status.name,
-                        updatedAt = now
+                        updatedAt = now,
+                        todoItemId = s.todoItemId,
+                        source = s.source
                     )
                 )
+                // 标记待办完成
+                val todoId = s.todoItemId
+                if (todoId != null && status != SessionStatus.ABANDONED) {
+                    runCatching {
+                        AppDatabase.get(this@TimerService).todoItemDao().markDone(
+                            todoId,
+                            com.focus.moment.data.TimeFmt.dayOf(now).toString(),
+                            now
+                        )
+                    }
+                }
+                // 已登录则后台静默同步
+                if (settings.loggedIn) {
+                    runCatching { com.focus.moment.data.SyncManager(this@TimerService).syncNow() }
+                }
             }
         }
         FocusSessionState.set(TimerState())
@@ -294,7 +322,9 @@ class TimerService : Service() {
             lock = lock,
             startedAt = startedAt,
             endAt = endAt,
-            nowTick = now
+            nowTick = now,
+            todoItemId = prefs.getString("todo_id", null),
+            source = prefs.getString("source", null) ?: "FOCUS"
         )
         FocusSessionState.set(state)
         FocusLockController.lockActive = lock && settings.lockMode == "STRICT"

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <!-- 雨雾底色 -->
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FFD8E6DC" />
+                <item android:offset="0.6" android:color="#FFB9D2C2" />
+                <item android:offset="1" android:color="#FF8FAF9B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 远竹 -->
+    <path android:pathData="M140,1920 L150,300 L164,300 L172,1920 Z" android:fillColor="#667A9B87" />
+    <path android:pathData="M340,1920 L352,420 L366,420 L372,1920 Z" android:fillColor="#597A9B87" />
+    <path android:pathData="M760,1920 L748,260 L762,260 L772,1920 Z" android:fillColor="#667A9B87" />
+    <path android:pathData="M960,1920 L950,480 L962,480 L968,1920 Z" android:fillColor="#4D7A9B87" />
+    <!-- 主竹 -->
+    <path android:pathData="M500,1920 L512,60 L556,60 L566,1920 Z" android:fillColor="#FF4E7A5F" />
+    <!-- 竹节 -->
+    <path android:pathData="M500,400 h66 v14 h-66z M502,760 h64 v14 h-64z M504,1120 h62 v14 h-62z M506,1480 h60 v14 h-60z" android:fillColor="#FF3D634D" />
+    <!-- 竹枝与叶 -->
+    <path android:pathData="M516,300 C420,260 360,270 300,240 C380,250 440,270 516,290 Z" android:fillColor="#FF5C8A6E" />
+    <path android:pathData="M518,320 C600,280 680,290 740,250 C660,268 600,286 518,308 Z" android:fillColor="#FF5C8A6E" />
+    <path android:pathData="M512,540 C430,500 380,510 320,480 C400,494 450,510 512,530 Z" android:fillColor="#FF527F63" />
+    <path android:pathData="M514,560 C620,520 700,530 760,490 C680,510 620,528 514,548 Z" android:fillColor="#FF527F63" />
+    <path android:pathData="M508,820 C420,790 350,800 290,770 C370,782 430,796 508,810 Z" android:fillColor="#FF47755A" />
+    <path android:pathData="M510,840 C610,810 690,820 750,780 C670,800 610,814 510,828 Z" android:fillColor="#FF47755A" />
+    <!-- 雨丝 -->
+    <path android:pathData="M120,200 L104,320 M300,140 L284,260 M700,180 L684,300 M880,120 L864,240 M220,560 L204,680 M820,520 L804,640 M540,1080 L524,1200 M180,1240 L164,1360 M900,1100 L884,1220" android:strokeColor="#66FFFFFF" android:strokeWidth="5" android:fillColor="#00000000" />
+    <!-- 地面 -->
+    <path android:pathData="M0,1760 C200,1720 400,1780 600,1744 C800,1710 960,1760 1080,1730 L1080,1920 L0,1920 Z" android:fillColor="#FF7DA188" />
+</vector>

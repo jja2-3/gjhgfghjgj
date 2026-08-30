@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="240"
+    android:viewportHeight="240">
+    <!-- 外圈 -->
+    <path
+        android:pathData="M120,120 m-104,0 a104,104 0 1,1 208,0 a104,104 0 1,1 -208,0"
+        android:fillColor="#FF2E7D6B" />
+    <path
+        android:pathData="M120,120 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"
+        android:fillColor="#FF2E7D6B"
+        android:strokeColor="#66FFFFFF"
+        android:strokeWidth="3" />
+    <!-- 表盘刻度 -->
+    <path
+        android:pathData="M120,44 L120,58 M120,182 L120,196 M44,120 L58,120 M182,120 L196,120"
+        android:strokeColor="#8CFFFFFF"
+        android:strokeWidth="6"
+        android:strokeLineCap="round" />
+    <!-- 指针：指向专注 -->
+    <path
+        android:pathData="M120,120 L120,72"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="10"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M120,120 L152,138"
+        android:strokeColor="#B3FFFFFF"
+        android:strokeWidth="8"
+        android:strokeLineCap="round" />
+    <!-- 圆心 -->
+    <path
+        android:pathData="M120,120 m-14,0 a14,14 0 1,1 28,0 a14,14 0 1,1 -28,0"
+        android:fillColor="#FFFFD9A0" />
+</vector>

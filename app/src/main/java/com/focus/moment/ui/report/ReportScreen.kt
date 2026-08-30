@@ -1,6 +1,9 @@
 package com.focus.moment.ui.report
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,6 +18,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
@@ -26,11 +30,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.layer.drawLayer
+import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.focus.moment.data.TimeFmt
@@ -85,10 +95,15 @@ class ReportViewModel(app: Application) : AndroidViewModel(app) {
 @Composable
 fun ReportScreen() {
     val app = LocalContext.current.applicationContext as Application
+    val ctx = LocalContext.current
     val vm = remember { ReportViewModel(app) }
     val sessions by vm.rangeSessions.collectAsState()
     val streak by vm.streak.collectAsState()
     var tab by remember { mutableStateOf(0) }
+    var shareMsg by remember { mutableStateOf("") }
+    var sharing by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val graphicsLayer = rememberGraphicsLayer()
 
     val today = LocalDate.now()
     val range: Pair<Long, Long> = when (tab) {
@@ -118,11 +133,26 @@ fun ReportScreen() {
         .sortedByDescending { it.value }
 
     Column(Modifier.fillMaxSize()) {
-        Text(
-            "报告",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(16.dp)
-        )
+        Row(
+            Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+        ) {
+            Text(
+                "报告",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.weight(1f)
+            )
+            Button(
+                enabled = !sharing,
+                onClick = {
+                    sharing = true
+                    scope.launch {
+                        shareMsg = shareReportImage(ctx, graphicsLayer.toImage())
+                        sharing = false
+                    }
+                }
+            ) { Text(if (sharing) "生成中…" else "分享图片") }
+        }
         TabRow(selectedTabIndex = tab) {
             listOf("日", "周", "月").forEachIndexed { i, t ->
                 Tab(selected = tab == i, onClick = { tab = i }, text = { Text(t) })
@@ -132,6 +162,10 @@ fun ReportScreen() {
         Column(
             Modifier
                 .verticalScroll(rememberScrollState())
+                .drawWithContent {
+                    scope.launch { graphicsLayer.record { this@drawWithContent.drawContent() } }
+                    drawLayer(graphicsLayer)
+                }
                 .padding(16.dp)
         ) {
             // 统计卡片
@@ -206,7 +240,36 @@ fun ReportScreen() {
             }
             Spacer(Modifier.height(40.dp))
         }
+        if (shareMsg.isNotEmpty()) {
+            Text(
+                shareMsg,
+                style = MaterialTheme.typography.bodySmall,
+                color = if (shareMsg.startsWith("分享失败")) MaterialTheme.colorScheme.error
+                else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+            )
+        }
     }
+}
+
+/** 将当前报告内容生成为图片并通过系统分享面板发送（微信/QQ 等） */
+private suspend fun shareReportImage(ctx: Context, image: androidx.compose.ui.graphics.ImageBitmap): String {
+    return runCatching {
+        val dir = java.io.File(ctx.cacheDir, "share").apply { mkdirs() }
+        val f = java.io.File(dir, "focus_report_${System.currentTimeMillis()}.png")
+        f.outputStream().use { out ->
+            image.asAndroidBitmap().compress(Bitmap.CompressFormat.PNG, 100, out)
+        }
+        val uri = FileProvider.getUriForFile(ctx, ctx.packageName + ".fileprovider", f)
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_TEXT, "我的专注报告 - 专注时刻")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        ctx.startActivity(Intent.createChooser(send, "分享专注报告"))
+        ""
+    }.getOrElse { "分享失败：${it.message}" }
 }
 
 @Composable

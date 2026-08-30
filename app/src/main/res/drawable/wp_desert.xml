@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <!-- 大漠天空 -->
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF7FA8C9" />
+                <item android:offset="0.5" android:color="#FFC9C39A" />
+                <item android:offset="1" android:color="#FFE0B078" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 烈日 -->
+    <path android:pathData="M780,320 m-110,0 a110,110 0 1,1 220,0 a110,110 0 1,1 -220,0" android:fillColor="#FFFBEFD4" />
+    <path android:pathData="M780,320 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0" android:fillColor="#33FBEFD4" />
+    <!-- 流云 -->
+    <path android:pathData="M-40,300 C160,260 300,320 480,288 C660,258 860,300 1120,262 L1120,320 C880,350 680,312 480,336 C300,358 140,330 -40,352 Z" android:fillColor="#59FFFFFF" />
+    <!-- 远丘 -->
+    <path android:pathData="M0,1150 C220,1020 420,1120 640,1030 C840,950 1000,1060 1080,1010 L1080,1920 L0,1920 Z" android:fillColor="#FFC99A64" />
+    <!-- 中丘 -->
+    <path android:pathData="M0,1330 C240,1200 480,1320 700,1230 C880,1160 1000,1260 1080,1210 L1080,1920 L0,1920 Z" android:fillColor="#FFBC8A52" />
+    <!-- 沙丘脊线 -->
+    <path android:pathData="M0,1330 C240,1200 480,1320 700,1230" android:strokeColor="#40FFFFFF" android:strokeWidth="6" android:fillColor="#00000000" />
+    <path android:pathData="M0,1150 C220,1020 420,1120 640,1030" android:strokeColor="#40FFFFFF" android:strokeWidth="5" android:fillColor="#00000000" />
+    <!-- 前景沙地 -->
+    <path android:pathData="M0,1550 C260,1460 520,1560 780,1480 C920,1440 1020,1490 1080,1460 L1080,1920 L0,1920 Z" android:fillColor="#FFAF7A44" />
+    <!-- 孤烟 -->
+    <path android:pathData="M540,1460 C528,1300 552,1160 540,1000 C532,900 548,840 542,760" android:strokeColor="#66EDE3D0" android:strokeWidth="16" android:fillColor="#00000000" />
+    <!-- 驼队剪影 -->
+    <path android:pathData="M300,1560 q22,-26 44,0 l6,20 h-56 Z M310,1580 l-4,26 M334,1580 l4,26" android:fillColor="#FF4A3620" android:strokeColor="#FF4A3620" android:strokeWidth="6" />
+    <path android:pathData="M380,1568 q20,-24 40,0 l6,18 h-52 Z" android:fillColor="#FF4A3620" />
+    <!-- 风滚草 -->
+    <path android:pathData="M200,1700 m-18,0 a18,18 0 1,1 36,0 a18,18 0 1,1 -36,0" android:strokeColor="#FF6B5230" android:strokeWidth="5" android:fillColor="#00000000" />
+</vector>

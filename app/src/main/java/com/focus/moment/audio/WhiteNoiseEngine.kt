@@ -34,8 +34,10 @@ object WhiteNoiseEngine {
     private var eventFreq = 0.0
     private var eventSweep = 0.0
     private var eventKind = 0
+    private var eventTotal = 1.0
     private var pulseOn = false
     private var pulseCount = 0
+    private var rumbleLP = 0f      // 雷声低通状态
 
     private val rnd = Random(System.nanoTime())
 
@@ -95,10 +97,23 @@ object WhiteNoiseEngine {
 
     fun isPlaying(): Boolean = running
 
+    /** 试听：播放约 2.5 秒后自动停止（再次点击其他音效会切换） */
+    private val previewSeq = java.util.concurrent.atomic.AtomicInteger(0)
+
+    fun preview(t: WhiteNoiseType, vol: Float = 0.7f) {
+        val my = previewSeq.incrementAndGet()
+        start(t, vol)
+        Thread {
+            try { Thread.sleep(2500) } catch (_: Exception) {}
+            if (previewSeq.get() == my) stop()
+        }.apply { priority = Thread.MIN_PRIORITY; start() }
+    }
+
     private fun resetState() {
         pinkB0 = 0f; pinkB1 = 0f; pinkB2 = 0f; pinkB3 = 0f; pinkB4 = 0f; pinkB5 = 0f; pinkB6 = 0f
         brown = 0f; phase = 0.0
         nextEventAt = 0.0; eventRemaining = 0.0; pulseCount = 0; pulseOn = false
+        rumbleLP = 0f
     }
 
     private fun pinkSample(): Float {
@@ -175,45 +190,129 @@ object WhiteNoiseEngine {
                     }
                     v
                 }
+
+                WhiteNoiseType.STREAM -> {
+                    // 溪流：轻粉噪音 + 高频水泡随机事件
+                    var v = pinkSample() * 0.5f + (rnd.nextFloat() * 2f - 1f) * 0.08f
+                    v += event(globalPos, SR) * 1.3f
+                    v
+                }
+
+                WhiteNoiseType.THUNDER -> {
+                    // 雷雨：雨声打底 + 随机低频雷鸣（长衰减）
+                    var v = pinkSample() * 0.8f + (rnd.nextFloat() * 2f - 1f) * 0.1f
+                    v += event(globalPos, SR) * 2.6f
+                    v
+                }
+
+                WhiteNoiseType.BIRDS -> {
+                    // 清晨鸟鸣：极轻风底 + 更频繁明亮的鸟鸣
+                    var v = pinkSample() * 0.18f
+                    v += event(globalPos, SR)
+                    v
+                }
+
+                WhiteNoiseType.CAFE -> {
+                    // 咖啡馆：人声嗡嗡底 + 杯碟碰撞声
+                    var v = brownSample() * 0.55f + pinkSample() * 0.12f
+                    v += event(globalPos, SR) * 1.2f
+                    v
+                }
+
+                WhiteNoiseType.SNOWSTORM -> {
+                    // 风雪夜：呼啸风 + 高频雪粒沙沙
+                    val lfo = 0.6f + 0.4f * sin(2.0 * PI * globalPos / (SR * 9.0)).toFloat()
+                    pinkSample() * lfo * 1.1f + (rnd.nextFloat() * 2f - 1f) * 0.07f
+                }
+
+                WhiteNoiseType.LEAVES -> {
+                    // 雨打树叶：柔和雨底 + 叶片滴答事件
+                    var v = pinkSample() * 0.55f
+                    v += event(globalPos, SR) * 1.5f
+                    v
+                }
             }
             v = v.coerceIn(-0.95f, 0.95f)
             buf[i] = (v * Short.MAX_VALUE).toInt().toShort()
         }
     }
 
-    /** 随机事件：鸟鸣 / 篝火爆裂。返回当前样本值（-1~1） */
+    /** 随机事件：0鸟鸣 / 1篝火爆裂 / 2水泡·杯碟碰撞 / 3雷鸣 / 4叶片滴答。返回当前样本值（-1~1） */
     private fun event(globalPos: Double, sr: Int): Float {
         if (eventRemaining <= 0.0) {
             if (globalPos >= nextEventAt) {
-                eventKind = if (type == WhiteNoiseType.FIRE) 1 else 0
+                eventKind = when (type) {
+                    WhiteNoiseType.FIRE -> 1
+                    WhiteNoiseType.STREAM, WhiteNoiseType.CAFE -> 2
+                    WhiteNoiseType.THUNDER -> 3
+                    WhiteNoiseType.LEAVES -> 4
+                    else -> 0
+                }
                 when (eventKind) {
                     0 -> { // 鸟鸣 80~200ms，2~4kHz 扫频
-                        eventRemaining = sr * (0.08 + rnd.nextDouble() * 0.12)
+                        eventTotal = sr * (0.08 + rnd.nextDouble() * 0.12)
+                        eventRemaining = eventTotal
                         eventFreq = 2000.0 + rnd.nextDouble() * 2000.0
                         eventSweep = (rnd.nextDouble() - 0.3) * 3000.0
                     }
-                    else -> { // 爆裂 15~50ms 白噪衰减
-                        eventRemaining = sr * (0.015 + rnd.nextDouble() * 0.035)
+                    1 -> { // 爆裂 15~50ms 白噪衰减
+                        eventTotal = sr * (0.015 + rnd.nextDouble() * 0.035)
+                        eventRemaining = eventTotal
                         eventFreq = 0.0
                         eventSweep = 0.0
                     }
+                    2 -> { // 水泡/杯碟 30~100ms，800~3000Hz 下滑音
+                        eventTotal = sr * (0.03 + rnd.nextDouble() * 0.07)
+                        eventRemaining = eventTotal
+                        eventFreq = 800.0 + rnd.nextDouble() * 2200.0
+                        eventSweep = -(300.0 + rnd.nextDouble() * 900.0)
+                    }
+                    3 -> { // 雷鸣 1.2~3s 低频隆隆
+                        eventTotal = sr * (1.2 + rnd.nextDouble() * 1.8)
+                        eventRemaining = eventTotal
+                        rumbleLP = 0f
+                    }
+                    else -> { // 4 滴答 8~25ms
+                        eventTotal = sr * (0.008 + rnd.nextDouble() * 0.017)
+                        eventRemaining = eventTotal
+                    }
                 }
-                val gap = if (eventKind == 0) 1.2 + rnd.nextDouble() * 2.5 else 0.05 + rnd.nextDouble() * 0.5
+                val gap = when (eventKind) {
+                    0 -> if (type == WhiteNoiseType.BIRDS) 0.35 + rnd.nextDouble() * 1.3 else 1.2 + rnd.nextDouble() * 2.5
+                    1 -> 0.05 + rnd.nextDouble() * 0.5
+                    2 -> if (type == WhiteNoiseType.CAFE) 0.4 + rnd.nextDouble() * 1.8 else 0.08 + rnd.nextDouble() * 0.4
+                    3 -> 6.0 + rnd.nextDouble() * 14.0
+                    else -> 0.06 + rnd.nextDouble() * 0.4
+                }
                 nextEventAt = globalPos + eventRemaining + sr * gap
             }
             return 0f
         }
         eventRemaining -= 1.0
-        val total = 1.0
         return when (eventKind) {
             0 -> {
-                phase += 2.0 * PI * (eventFreq + eventSweep * (1.0 - eventRemaining / total)) / sr
+                phase += 2.0 * PI * (eventFreq + eventSweep * (1.0 - eventRemaining / eventTotal)) / sr
                 val env = min(1.0, eventRemaining / (sr * 0.05)).toFloat()
                 sin(phase).toFloat() * env * 0.22f
             }
-            else -> {
+            1 -> {
                 val env = (eventRemaining / (sr * 0.03)).toFloat().coerceIn(0f, 1f)
                 (rnd.nextFloat() * 2f - 1f) * env * 0.5f
+            }
+            2 -> {
+                phase += 2.0 * PI * (eventFreq + eventSweep * (1.0 - eventRemaining / eventTotal)) / sr
+                val env = (eventRemaining / (sr * 0.02)).toFloat().coerceIn(0f, 1f)
+                sin(phase).toFloat() * env * 0.3f
+            }
+            3 -> {
+                val env = (eventRemaining / (sr * 1.2)).toFloat().coerceIn(0f, 1f)
+                val target = (rnd.nextFloat() * 2f - 1f) * 0.5f
+                rumbleLP += 0.015f * (target - rumbleLP)
+                rumbleLP * env * 2.4f
+            }
+            else -> {
+                val env = (eventRemaining / (sr * 0.015)).toFloat().coerceIn(0f, 1f)
+                (rnd.nextFloat() * 2f - 1f) * env * 0.4f
             }
         }
     }

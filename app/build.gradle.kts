@@ -14,13 +14,20 @@ android {
         applicationId = "com.focus.moment"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            // CI 上用 debug 签名，保证 release 包可直接安装
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

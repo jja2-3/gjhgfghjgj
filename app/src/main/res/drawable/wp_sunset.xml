@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="1080dp"
+    android:height="1920dp"
+    android:viewportWidth="1080"
+    android:viewportHeight="1920">
+    <!-- 黄昏天空 -->
+    <path android:pathData="M0,0h1080v1920h-1080z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0" android:endX="0" android:endY="1920">
+                <item android:offset="0" android:color="#FF3B2A55" />
+                <item android:offset="0.45" android:color="#FF8C4A5E" />
+                <item android:offset="0.7" android:color="#FFD97B52" />
+                <item android:offset="1" android:color="#FF1E2033" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 落日 -->
+    <path
+        android:pathData="M540,980 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"
+        android:fillColor="#FFFFD9A0" />
+    <path
+        android:pathData="M540,980 m-190,0 a190,190 0 1,1 380,0 a190,190 0 1,1 -380,0"
+        android:fillColor="#33FFC97A" />
+    <!-- 云带 -->
+    <path android:pathData="M-50,880 C180,840 320,900 520,868 C720,836 900,880 1130,848 L1130,900 C900,930 700,892 520,916 C320,940 160,908 -50,936 Z" android:fillColor="#4C5E3A63" />
+    <path android:pathData="M-50,1080 C200,1040 380,1100 560,1068 C760,1036 940,1080 1130,1050 L1130,1100 C920,1130 740,1096 560,1116 C360,1140 180,1112 -50,1140 Z" android:fillColor="#595E3A63" />
+    <!-- 湖面 -->
+    <path android:pathData="M0,1180h1080v740h-1080z" android:fillColor="#FF2A2E4A" />
+    <!-- 倒影 -->
+    <path android:pathData="M540,1180 m-120,0 a120,28 0 1,0 240,0 a120,28 0 1,0 -240,0" android:fillColor="#59FFD9A0" />
+    <path android:pathData="M470,1300 h140 v10 h-140z M500,1360 h120 v9 h-120z M480,1420 h150 v8 h-150z M510,1480 h110 v8 h-110z" android:fillColor="#40FFC97A" />
+    <!-- 远山 -->
+    <path
+        android:pathData="M0,1180 L180,1020 L340,1140 L520,990 L720,1150 L880,1040 L1080,1170 L1080,1180 Z"
+        android:fillColor="#FF252642" />
+    <!-- 飞鸟 -->
+    <path android:pathData="M300,420 q30,-22 60,0 q30,-22 60,0" android:strokeColor="#66FFFFFF" android:strokeWidth="6" android:fillColor="#00000000" />
+    <path android:pathData="M420,500 q24,-18 48,0 q24,-18 48,0" android:strokeColor="#4DFFFFFF" android:strokeWidth="5" android:fillColor="#00000000" />
+    <!-- 芦苇 -->
+    <path android:pathData="M120,1920 C126,1740 110,1660 140,1560 M180,1920 C186,1780 170,1700 196,1620 M920,1920 C914,1750 930,1670 904,1570 M968,1920 C962,1790 978,1710 952,1630" android:strokeColor="#FF141626" android:strokeWidth="10" android:fillColor="#00000000" />
+</vector>

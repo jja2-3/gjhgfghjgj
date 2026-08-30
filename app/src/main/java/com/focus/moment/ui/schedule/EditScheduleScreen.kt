@@ -109,6 +109,7 @@ fun EditScheduleScreen(sid: String, onDone: () -> Unit) {
         )
         scope.launch {
             AppDatabase.get(ctx.applicationContext as Application).scheduleDao().upsert(entity)
+            com.focus.moment.service.LockScheduler.armAllAsync(ctx)
             onDone()
         }
     }
@@ -119,6 +120,7 @@ fun EditScheduleScreen(sid: String, onDone: () -> Unit) {
             dao.all().firstOrNull { it.id == sid }?.let {
                 dao.upsert(it.copy(deleted = true, updatedAt = System.currentTimeMillis()))
             }
+            com.focus.moment.service.LockScheduler.armAllAsync(ctx)
             onDone()
         }
     }

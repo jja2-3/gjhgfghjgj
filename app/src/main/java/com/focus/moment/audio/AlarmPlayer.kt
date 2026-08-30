@@ -17,7 +17,7 @@ import kotlin.math.min
 import kotlin.math.sin
 
 /**
- * 专注结束提醒：铃声（内置合成音色或系统铃声）+ 震动，循环播放直到用户手动停止。
+ * 专注结束提醒：铃声（内置合成音色 / 系统铃声 / 音乐库自定义铃声）+ 震动，循环播放直到用户手动停止。
  */
 object AlarmPlayer {
 
@@ -25,11 +25,12 @@ object AlarmPlayer {
     private var track: AudioTrack? = null
     private var thread: Thread? = null
     private var ringtone: android.media.Ringtone? = null
+    private var customPlayer: android.media.MediaPlayer? = null
 
     @Volatile private var playing = false
     private var vibrator: Vibrator? = null
 
-    fun start(context: Context, sound: AlarmSound, remind: RemindMode) {
+    fun start(context: Context, sound: AlarmSound, remind: RemindMode, customPath: String? = null) {
         stop()
         // 震动
         if (remind != RemindMode.SOUND) {
@@ -45,19 +46,21 @@ object AlarmPlayer {
         }
         // 铃声
         if (remind != RemindMode.VIBRATE) {
-            if (sound == AlarmSound.SYSTEM) {
-                val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                    ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-                val r = RingtoneManager.getRingtone(context, uri)
-                r.isLooping = true
-                r.audioAttributes = AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build()
-                r.play()
-                ringtone = r
-            } else {
-                playSynthLoop(sound)
+            when {
+                !customPath.isNullOrBlank() -> playCustomLoop(customPath)
+                sound == AlarmSound.SYSTEM -> {
+                    val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                        ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                    val r = RingtoneManager.getRingtone(context, uri) ?: return
+                    r.isLooping = true
+                    r.audioAttributes = AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                    r.play()
+                    ringtone = r
+                }
+                else -> playSynthLoop(sound)
             }
         }
     }
@@ -70,6 +73,10 @@ object AlarmPlayer {
         track = null
         try { ringtone?.stop() } catch (_: Exception) {}
         ringtone = null
+        try {
+            customPlayer?.stop(); customPlayer?.release()
+        } catch (_: Exception) {}
+        customPlayer = null
         vibrator?.cancel()
         vibrator = null
     }
@@ -77,7 +84,11 @@ object AlarmPlayer {
     fun isPlaying(): Boolean = playing
 
     /** 试听 1.5 秒 */
-    fun preview(context: Context, sound: AlarmSound) {
+    fun preview(context: Context, sound: AlarmSound, customPath: String? = null) {
+        if (!customPath.isNullOrBlank()) {
+            playCustomOnce(customPath)
+            return
+        }
         if (sound == AlarmSound.SYSTEM) {
             val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                 ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -86,6 +97,45 @@ object AlarmPlayer {
         }
         val buf = synthBuffer(sound, 1.5)
         playBufferOnce(buf)
+    }
+
+    private fun playCustomLoop(path: String) {
+        playing = true
+        try {
+            val mp = android.media.MediaPlayer()
+            mp.setAudioAttributes(
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build()
+            )
+            mp.setDataSource(path)
+            mp.isLooping = true
+            mp.prepare()
+            mp.start()
+            customPlayer = mp
+        } catch (_: Exception) {
+            playing = false
+        }
+    }
+
+    private fun playCustomOnce(path: String) {
+        Thread {
+            try {
+                val mp = android.media.MediaPlayer()
+                mp.setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .build()
+                )
+                mp.setDataSource(path)
+                mp.prepare()
+                mp.start()
+                Thread.sleep(1500)
+                mp.stop(); mp.release()
+            } catch (_: Exception) {}
+        }.apply { priority = Thread.NORM_PRIORITY - 1; start() }
     }
 
     private fun getVibrator(context: Context): Vibrator =

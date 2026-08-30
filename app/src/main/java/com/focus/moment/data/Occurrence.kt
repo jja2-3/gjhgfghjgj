@@ -36,6 +36,9 @@ fun ScheduleEntity.occursOn(date: LocalDate): Boolean {
         RepeatRule.ONCE -> date == anchor
         RepeatRule.DAILY -> true
         RepeatRule.WEEKLY -> date.dayOfWeek == anchor.dayOfWeek
+        RepeatRule.MONTHLY -> date.dayOfMonth == anchor.dayOfMonth
+        RepeatRule.YEARLY -> date.monthValue == anchor.monthValue && date.dayOfMonth == anchor.dayOfMonth
+        RepeatRule.WORKDAYS -> date.dayOfWeek.value in 1..5
         RepeatRule.CUSTOM -> this.repeatDays
             ?.split(',')
             ?.mapNotNull { it.trim().toIntOrNull() }
@@ -56,5 +59,8 @@ fun ScheduleEntity.repeatLabel(): String = when (RepeatRule.from(this.repeatRule
     RepeatRule.ONCE -> "单次"
     RepeatRule.DAILY -> "每天"
     RepeatRule.WEEKLY -> "每周"
+    RepeatRule.MONTHLY -> "每月"
+    RepeatRule.YEARLY -> "每年"
+    RepeatRule.WORKDAYS -> "工作日"
     RepeatRule.CUSTOM -> "自定义"
 }

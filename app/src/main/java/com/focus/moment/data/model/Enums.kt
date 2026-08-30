@@ -24,10 +24,29 @@ enum class TimerMode { COUNTDOWN, COUNTUP;
 
 /** 重复规则 */
 enum class RepeatRule(val label: String) {
-    ONCE("单次"), DAILY("每天"), WEEKLY("每周"), CUSTOM("自定义");
+    ONCE("单次"), DAILY("每天"), WEEKLY("每周"), MONTHLY("每月"), YEARLY("每年"),
+    WORKDAYS("工作日"), CUSTOM("自定义");
 
     companion object {
         fun from(name: String?): RepeatRule = entries.firstOrNull { it.name == name } ?: ONCE
+    }
+}
+
+/** 待办类型 */
+enum class TodoType(val label: String) {
+    NORMAL("普通"), GOAL("定目标"), HABIT("养习惯");
+
+    companion object {
+        fun from(name: String?): TodoType = entries.firstOrNull { it.name == name } ?: NORMAL
+    }
+}
+
+/** 待办计时方式 */
+enum class TodoTiming(val label: String) {
+    COUNTDOWN("倒计时"), COUNTUP("正计时"), NONE("不计时");
+
+    companion object {
+        fun from(name: String?): TodoTiming = entries.firstOrNull { it.name == name } ?: COUNTDOWN
     }
 }
 
@@ -69,7 +88,9 @@ enum class LockMode(val label: String, val desc: String) {
 
 /** 白噪音类型 */
 enum class WhiteNoiseType(val label: String) {
-    RAIN("雨声"), WAVE("海浪"), FOREST("森林"), FIRE("篝火"), WIND("风声"), CRICKET("夜晚虫鸣"), WHITE("白噪音");
+    RAIN("雨声"), WAVE("海浪"), FOREST("森林"), FIRE("篝火"), WIND("风声"), CRICKET("夜晚虫鸣"),
+    WHITE("白噪音"), STREAM("溪流"), THUNDER("雷雨"), BIRDS("清晨鸟鸣"), CAFE("咖啡馆"),
+    SNOWSTORM("风雪夜"), LEAVES("雨打树叶");
 
     companion object {
         fun from(name: String?): WhiteNoiseType = entries.firstOrNull { it.name == name } ?: RAIN
