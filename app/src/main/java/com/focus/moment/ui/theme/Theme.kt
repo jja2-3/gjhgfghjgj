@@ -80,14 +80,14 @@ private fun systemFontOf(vararg names: String): FontFamily {
     val tf = runCatching {
         android.graphics.Typeface.create(names[0], android.graphics.Typeface.NORMAL)
     }.getOrNull() ?: return FontFamily.Default
-    return FontFamily(androidx.compose.ui.text.font.Font(tf))
+    return FontFamily(tf)
 }
 
 private fun customFontOf(path: String): FontFamily {
     if (path.isBlank()) return FontFamily.Default
     val tf = runCatching { android.graphics.Typeface.createFromFile(path) }.getOrNull()
         ?: return FontFamily.Default
-    return FontFamily(androidx.compose.ui.text.font.Font(tf))
+    return FontFamily(tf)
 }
 
 /** 将字体族应用到全部文字样式 */
