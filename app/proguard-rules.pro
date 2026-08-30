@@ -23,6 +23,11 @@
 -dontwarn org.bouncycastle.**
 -dontwarn org.openjsse.**
 
+# ==== slf4j（可选日志实现，运行时不需要）====
+-dontwarn org.slf4j.**
+-dontwarn javax.jmdns.**
+-dontwarn org.antlr.**
+
 # ==== Coroutines ====
 -dontwarn kotlinx.coroutines.**
 -keepclassmembers class kotlinx.coroutines.** {
