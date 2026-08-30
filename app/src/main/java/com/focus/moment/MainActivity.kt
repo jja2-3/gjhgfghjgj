@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
@@ -155,7 +156,7 @@ fun AppRoot(settings: AppSettings) {
 }
 
 @Composable
-private fun TabItem(selected: Boolean, label: String, icon: ImageVector, onClick: () -> Unit) {
+private fun RowScope.TabItem(selected: Boolean, label: String, icon: ImageVector, onClick: () -> Unit) {
     val tint = if (selected) MaterialTheme.colorScheme.primary
                else MaterialTheme.colorScheme.onSurfaceVariant
     Column(
