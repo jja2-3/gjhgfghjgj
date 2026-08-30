@@ -1,6 +1,9 @@
 package com.focus.moment.ui.schedule
 
 import android.app.Application
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -19,8 +22,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -28,16 +29,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TimePicker
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,13 +49,11 @@ import com.focus.moment.data.model.Category
 import com.focus.moment.data.model.RepeatRule
 import com.focus.moment.data.model.TimerMode
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneOffset
 import java.util.UUID
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun EditScheduleScreen(sid: String, onDone: () -> Unit) {
     val ctx = LocalContext.current
@@ -165,17 +159,17 @@ fun EditScheduleScreen(sid: String, onDone: () -> Unit) {
 
         Text("计时方式", style = MaterialTheme.typography.titleSmall)
         Spacer(Modifier.height(8.dp))
-        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-            SegmentedButton(
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(
                 selected = mode == TimerMode.COUNTDOWN,
                 onClick = { mode = TimerMode.COUNTDOWN },
-                shape = SegmentedButtonDefaults.itemShape(0, 2)
-            ) { Text("倒计时") }
-            SegmentedButton(
+                label = { Text("倒计时") }
+            )
+            FilterChip(
                 selected = mode == TimerMode.COUNTUP,
                 onClick = { mode = TimerMode.COUNTUP },
-                shape = SegmentedButtonDefaults.itemShape(1, 2)
-            ) { Text("正计时") }
+                label = { Text("正计时") }
+            )
         }
         Spacer(Modifier.height(14.dp))
 
@@ -240,40 +234,40 @@ fun EditScheduleScreen(sid: String, onDone: () -> Unit) {
     }
 
     if (showDate) {
-        val st = rememberDatePickerState(
-            initialSelectedDateMillis = date.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
-        )
-        DatePickerDialog(
-            onDismissRequest = { showDate = false },
-            confirmButton = {
-                TextButton(onClick = {
-                    st.selectedDateMillis?.let {
-                        date = Instant.ofEpochMilli(it).atZone(ZoneOffset.UTC).toLocalDate()
-                    }
+        SideEffect {
+            DatePickerDialog(
+                ctx,
+                { _, year, month, dayOfMonth ->
+                    date = LocalDate.of(year, month + 1, dayOfMonth)
                     showDate = false
-                }) { Text("确定") }
-            },
-            dismissButton = { TextButton(onClick = { showDate = false }) { Text("取消") } }
-        ) {
-            DatePicker(state = st)
+                },
+                date.year, date.monthValue - 1, date.dayOfMonth
+            ).apply {
+                setOnDismissListener { showDate = false }
+                show()
+            }
         }
     }
 
     if (showTime) {
-        val init = runCatching { LocalTime.parse(startTime ?: "") }.getOrDefault(LocalTime.of(9, 0))
-        val ts = rememberTimePickerState(initialHour = init.hour, initialMinute = init.minute, is24Hour = true)
-        AlertDialog(
-            onDismissRequest = { showTime = false },
-            title = { Text("开始时间") },
-            text = { TimePicker(state = ts) },
-            confirmButton = {
-                TextButton(onClick = {
-                    startTime = "%02d:%02d".format(ts.hour, ts.minute)
+        SideEffect {
+            val init = runCatching { LocalTime.parse(startTime ?: "") }.getOrDefault(LocalTime.of(9, 0))
+            TimePickerDialog(
+                ctx,
+                { _, hourOfDay, minute ->
+                    startTime = "%02d:%02d".format(hourOfDay, minute)
                     showTime = false
-                }) { Text("确定") }
-            },
-            dismissButton = { TextButton(onClick = { showTime = false }) { Text("清除") } }
-        )
+                },
+                init.hour, init.minute, true
+            ).apply {
+                setButton(DatePickerDialog.BUTTON_NEGATIVE, "清除") { _, _ ->
+                    startTime = null
+                    showTime = false
+                }
+                setOnDismissListener { showTime = false }
+                show()
+            }
+        }
     }
 
     if (confirmDelete) {

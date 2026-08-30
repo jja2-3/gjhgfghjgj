@@ -5,6 +5,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -24,14 +26,12 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -55,7 +55,7 @@ import com.focus.moment.ui.theme.WALLPAPERS
 import com.focus.moment.ui.theme.wallpaperOf
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun WallpaperScreen(settings: AppSettings, onBack: () -> Unit = {}) {
     val ctx = LocalContext.current
@@ -77,17 +77,17 @@ fun WallpaperScreen(settings: AppSettings, onBack: () -> Unit = {}) {
         }
         Spacer(Modifier.height(8.dp))
 
-        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-            SegmentedButton(
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FilterChip(
                 selected = target == 0,
                 onClick = { target = 0 },
-                shape = SegmentedButtonDefaults.itemShape(0, 2)
-            ) { Text("首页壁纸") }
-            SegmentedButton(
+                label = { Text("首页壁纸") }
+            )
+            FilterChip(
                 selected = target == 1,
                 onClick = { target = 1 },
-                shape = SegmentedButtonDefaults.itemShape(1, 2)
-            ) { Text("计时页壁纸") }
+                label = { Text("计时页壁纸") }
+            )
         }
         Spacer(Modifier.height(12.dp))
 

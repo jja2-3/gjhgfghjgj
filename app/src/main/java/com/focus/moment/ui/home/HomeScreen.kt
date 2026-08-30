@@ -23,6 +23,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,9 +36,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -238,7 +237,7 @@ private fun ScheduleRow(s: ScheduleEntity, onStartFocus: (TimerDraft) -> Unit, o
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun QuickStartDialog(onDismiss: () -> Unit, onStart: (TimerDraft) -> Unit) {
     var mode by remember { mutableStateOf(TimerMode.COUNTDOWN) }
@@ -251,17 +250,19 @@ private fun QuickStartDialog(onDismiss: () -> Unit, onStart: (TimerDraft) -> Uni
         title = { Text("快速开始") },
         text = {
             Column {
-                SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-                    SegmentedButton(
+                Text("计时方式", style = MaterialTheme.typography.labelMedium)
+                Spacer(Modifier.height(6.dp))
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FilterChip(
                         selected = mode == TimerMode.COUNTDOWN,
                         onClick = { mode = TimerMode.COUNTDOWN },
-                        shape = SegmentedButtonDefaults.itemShape(0, 2)
-                    ) { Text("倒计时") }
-                    SegmentedButton(
+                        label = { Text("倒计时") }
+                    )
+                    FilterChip(
                         selected = mode == TimerMode.COUNTUP,
                         onClick = { mode = TimerMode.COUNTUP },
-                        shape = SegmentedButtonDefaults.itemShape(1, 2)
-                    ) { Text("正计时") }
+                        label = { Text("正计时") }
+                    )
                 }
                 Spacer(Modifier.height(14.dp))
                 if (mode == TimerMode.COUNTDOWN) {
