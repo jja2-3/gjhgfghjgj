@@ -84,7 +84,8 @@ class ReportViewModel(app: Application) : AndroidViewModel(app) {
 
 @Composable
 fun ReportScreen() {
-    val vm = remember { ReportViewModel(LocalContext.current.applicationContext as Application) }
+    val app = LocalContext.current.applicationContext as Application
+    val vm = remember { ReportViewModel(app) }
     val sessions by vm.rangeSessions.collectAsState()
     val streak by vm.streak.collectAsState()
     var tab by remember { mutableStateOf(0) }
@@ -112,7 +113,7 @@ fun ReportScreen() {
     val byCategory = sessions.groupBy { it.category }
         .map { (c, list) ->
             val cat = Category.from(c)
-            PieSlice(cat.label, list.sumOf { it.actualSeconds.toLong() / 60f }.toFloat(), categoryColor(cat.colorHex))
+            PieSlice(cat.label, list.sumOf { it.actualSeconds.toLong() } / 60f, categoryColor(cat.colorHex))
         }
         .sortedByDescending { it.value }
 
@@ -166,7 +167,7 @@ fun ReportScreen() {
                     val values = (0..6).map { d ->
                         val day = monday.plusDays(d.toLong())
                         sessions.filter { TimeFmt.dayOf(it.startedAt) == day }
-                            .sumOf { it.actualSeconds.toLong() / 60f }.toFloat()
+                            .sumOf { it.actualSeconds.toLong() } / 60f
                     }
                     ChartCard("每日专注（分钟）") {
                         BarChart(labels, values, MaterialTheme.colorScheme.primary)
@@ -177,7 +178,7 @@ fun ReportScreen() {
                     val labels = (1..month.lengthOfMonth()).map { it.toString() }
                     val values = (1..month.lengthOfMonth()).map { d ->
                         sessions.filter { TimeFmt.dayOf(it.startedAt) == month.atDay(d) }
-                            .sumOf { it.actualSeconds.toLong() / 60f }.toFloat()
+                            .sumOf { it.actualSeconds.toLong() } / 60f
                     }
                     ChartCard("专注趋势（分钟）") {
                         LineChart(labels, values, MaterialTheme.colorScheme.primary)

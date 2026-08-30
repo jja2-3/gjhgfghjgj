@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -86,7 +87,8 @@ fun ScheduleScreen(
     onStartFocus: (TimerDraft) -> Unit,
     onEditSchedule: (String) -> Unit
 ) {
-    val vm = remember { ScheduleViewModel(LocalContext.current.applicationContext as Application) }
+    val app = LocalContext.current.applicationContext as Application
+    val vm = remember { ScheduleViewModel(app) }
     val all by vm.all.collectAsState()
     var tab by remember { mutableStateOf(0) }
     var deleteTarget by remember { mutableStateOf<ScheduleEntity?>(null) }

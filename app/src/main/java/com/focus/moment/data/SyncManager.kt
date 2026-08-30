@@ -146,9 +146,10 @@ class SyncManager(private val context: android.content.Context) {
             // 1. 刷新 token，避免过期
             refreshIfNeeded(url, key)
 
+            val accessToken = store.current().sbAccessToken
             val headers: io.ktor.client.request.HttpRequestBuilder.() -> Unit = {
                 header("apikey", key)
-                header(HttpHeaders.Authorization, "Bearer ${store.current().sbAccessToken}")
+                header(HttpHeaders.Authorization, "Bearer $accessToken")
             }
 
             // 2. 拉取远端

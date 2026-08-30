@@ -40,7 +40,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LifecycleEventObserver
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,11 +49,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.viewModelScope
 import com.focus.moment.data.AppSettings
 import com.focus.moment.data.TimeFmt
@@ -95,7 +96,8 @@ fun HomeScreen(
     onStartFocus: (TimerDraft) -> Unit,
     onEditSchedule: (String) -> Unit
 ) {
-    val vm = remember { HomeViewModel(androidx.compose.ui.platform.LocalContext.current.applicationContext as Application) }
+    val app = LocalContext.current.applicationContext as Application
+    val vm = remember { HomeViewModel(app) }
     val schedules by vm.todaySchedules.collectAsState()
     val sessions by vm.todaySessions.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
